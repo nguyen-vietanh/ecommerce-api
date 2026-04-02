@@ -34,13 +34,11 @@ public class Category extends BaseEntity {
     @Column(unique = true, nullable = false, columnDefinition = "VARCHAR(100)")
     String nameVi;
 
-    @Column(nullable = false, columnDefinition = "SMALLINT")
-    @Builder.Default
-    Integer displayOrder = 0;
+    @Column(nullable = false, columnDefinition = "SMALLINT DEFAULT 0")
+    Integer displayOrder;
 
-    @Column(nullable = false, columnDefinition = "BOOLEAN")
-    @Builder.Default
-    Boolean isActive = true;
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT 1")
+    Boolean isActive;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
     List<Book> books;

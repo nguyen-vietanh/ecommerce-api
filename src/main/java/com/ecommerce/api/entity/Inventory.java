@@ -25,16 +25,14 @@ import lombok.experimental.FieldDefaults;
 @Builder
 public class Inventory extends BaseEntity {
 
-    @Column(nullable = false, columnDefinition = "INTEGER", check = @CheckConstraint(constraint = "quantity >= 0"))
-    @Builder.Default
-    Integer quantity = 0;
+    @Column(nullable = false, columnDefinition = "INTEGER DEFAULT 0", check = @CheckConstraint(constraint = "quantity >= 0"))
+    Integer quantity;
 
-    @Column(nullable = false, columnDefinition = "INTEGER", check = @CheckConstraint(constraint = "reserved_quantity >= 0"))
+    @Column(nullable = false, columnDefinition = "INTEGER DEFAULT 0", check = @CheckConstraint(constraint = "reserved_quantity >= 0"))
     Integer reservedQuantity;
 
-    @Column(nullable = false, columnDefinition = "INTEGER")
-    @Builder.Default
-    Integer lowStockThreshold = 5;
+    @Column(nullable = false, columnDefinition = "INTEGER DEFAULT 5")
+    Integer lowStockThreshold;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id", nullable = false)

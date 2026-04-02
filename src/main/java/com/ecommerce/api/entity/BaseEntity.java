@@ -15,17 +15,17 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @MappedSuperclass
 public abstract class BaseEntity {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(columnDefinition = "BIGINT")
     Long id;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP")
-    Instant createdAt = Instant.now();
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    Instant createdAt;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP")
-    Instant updatedAt = Instant.now();
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    Instant updatedAt;
 
     @PrePersist
     protected void onCreate() {

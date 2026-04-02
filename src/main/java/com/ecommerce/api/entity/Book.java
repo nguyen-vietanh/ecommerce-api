@@ -25,7 +25,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
 public class Book extends BaseEntity {
-    
+
     @Column(nullable = false, columnDefinition = "VARCHAR(300)")
     String title;
 
@@ -47,9 +47,8 @@ public class Book extends BaseEntity {
     @Column(columnDefinition = "SMALLINT")
     Integer publicationYear;
 
-    @Column(nullable = false, columnDefinition = "BOOLEAN")
-    @Builder.Default
-    Boolean isActive = true;
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT 1")
+    Boolean isActive;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
