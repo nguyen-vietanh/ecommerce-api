@@ -87,12 +87,6 @@
 			<artifactId>mapstruct</artifactId>
 			<version>${org.mapstruct.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.mapstruct</groupId>
-			<artifactId>mapstruct-processor</artifactId>
-			<version>${org.mapstruct.version}</version>
-		</dependency>
-
 	</dependencies>
 
 	<build>
@@ -125,6 +119,11 @@
 									<groupId>org.projectlombok</groupId>
 									<artifactId>lombok</artifactId>
 								</path>
+								<path>
+									<groupId>org.mapstruct</groupId>
+									<artifactId>mapstruct-processor</artifactId>
+									<version>${org.mapstruct.version}</version>
+								</path>
 							</annotationProcessorPaths>
 						</configuration>
 					</execution>
@@ -139,6 +138,11 @@
 								<path>
 									<groupId>org.projectlombok</groupId>
 									<artifactId>lombok</artifactId>
+								</path>
+								<path>
+									<groupId>org.mapstruct</groupId>
+									<artifactId>mapstruct-processor</artifactId>
+									<version>${org.mapstruct.version}</version>
 								</path>
 							</annotationProcessorPaths>
 						</configuration>
