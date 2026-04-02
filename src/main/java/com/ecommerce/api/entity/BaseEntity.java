@@ -10,8 +10,12 @@ import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
+@Getter
+@Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @MappedSuperclass
 public abstract class BaseEntity {
