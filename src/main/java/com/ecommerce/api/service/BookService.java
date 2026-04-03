@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.ecommerce.api.dto.request.GetAllBooksRequest;
@@ -14,6 +15,7 @@ import com.ecommerce.api.dto.response.GetAllBooksReponse;
 import com.ecommerce.api.entity.Book;
 import com.ecommerce.api.mapper.BookMapper;
 import com.ecommerce.api.repository.BookRepository;
+import com.ecommerce.api.specification.BookSpecs;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +36,16 @@ public class BookService {
             getAllBooksRequest.getSize(),
             Sort.by(getAllBooksRequest.getSort().getDirection(), getAllBooksRequest.getSort().getField())
         );
-        Page<Book> bookPage = this.bookRepository.findAll(pageable);
+
+        Specification<Book> bookSpecs = (root, query, cb) -> null;
+
+        String search = getAllBooksRequest.getSearch();
+        if(search != null && !search.isBlank()) {
+            Specification<Book> hasTitleOrAuthorContains = BookSpecs.hasTitleOrAuthorContains(search);
+            bookSpecs = bookSpecs.and(hasTitleOrAuthorContains);
+        }
+
+        Page<Book> bookPage = this.bookRepository.findAll(bookSpecs, pageable);
         return ApiSuccessResponse.<List<GetAllBooksReponse>>builder()
             .data(bookPage.getContent().stream()
                 .map(book -> this.bookMapper.toGetAllBooksReponse(book))
