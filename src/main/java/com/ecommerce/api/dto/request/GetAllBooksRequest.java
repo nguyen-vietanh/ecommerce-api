@@ -1,0 +1,29 @@
+package com.ecommerce.api.dto.request;
+
+import com.ecommerce.api.constant.SortCriteria;
+
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.FieldDefaults;
+
+@Setter
+@Getter
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class GetAllBooksRequest {
+
+    @Min(value = 1)
+    @NotNull
+    Integer page = 1;
+
+    @Min(value = 1)
+    @Max(value = 100)
+    @NotNull
+    Integer size = 20;
+
+    @NotNull
+    SortCriteria sort = SortCriteria.NEWEST;
+}
