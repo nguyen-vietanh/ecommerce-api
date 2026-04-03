@@ -31,4 +31,6 @@ public class GetAllBooksRequest {
 
     @Length(max = 200)
     String search;
+
+    String category;
 }

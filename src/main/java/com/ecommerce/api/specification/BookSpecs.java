@@ -32,6 +32,15 @@ public class BookSpecs {
         };
     }
 
+    public static Specification<Book> inCategory(String categorySlug) {
+        return (root, query, cb) -> {
+            if (categorySlug == null || categorySlug.isBlank()) {
+                return null;
+            }
+            return cb.equal(root.get("category").get("slug"), categorySlug);
+        };
+    }
+
     private BookSpecs() {
 
     }

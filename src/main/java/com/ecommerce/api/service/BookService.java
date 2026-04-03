@@ -41,8 +41,14 @@ public class BookService {
 
         String search = getAllBooksRequest.getSearch();
         if(search != null && !search.isBlank()) {
-            Specification<Book> hasTitleOrAuthorContains = BookSpecs.hasTitleOrAuthorContains(search);
-            bookSpecs = bookSpecs.and(hasTitleOrAuthorContains);
+            Specification<Book> titleOrAuthorContains = BookSpecs.hasTitleOrAuthorContains(search);
+            bookSpecs = bookSpecs.and(titleOrAuthorContains);
+        }
+
+        String category = getAllBooksRequest.getCategory();
+        if(category != null && !category.isBlank()) {
+            Specification<Book> inCategory = BookSpecs.inCategory(category);
+            bookSpecs = bookSpecs.and(inCategory);
         }
 
         Page<Book> bookPage = this.bookRepository.findAll(bookSpecs, pageable);

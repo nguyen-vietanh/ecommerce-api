@@ -1,0 +1,34 @@
+slug,name_en,name_vi,display_order,is_active
+childrens-books,Children's Books,Sách Thiếu Nhi,1,1
+other-languages,Other Languages,Các Ngôn Ngữ Khác,2,1
+dictionaries-and-languages,Dictionaries & Languages,Từ Điển và Ngôn Ngữ,3,1
+fiction,Fiction,Tiểu Thuyết,4,1
+business-finance-and-management,Business Finance & Management,Kinh Doanh Tài Chính và Quản Lý,5,1
+personal-development,Personal Development,Phát Triển Bản Thân,6,1
+biography,Biography,Tiểu Sử,7,1
+society-and-social-sciences,Society & Social Sciences,Xã Hội và Khoa Học Xã Hội,8,1
+education-and-reference,Education & Reference,Giáo Dục và Tài Liệu Tham Khảo,9,1
+graphic-novels-anime-and-manga,Graphic Novels Anime & Manga,Truyện Tranh Anime và Manga,10,1
+crafts-and-hobbies,Crafts and Hobbies,Thủ Công và Sở Thích,11,1
+mind-body-and-spirit,Mind Body & Spirit,Tâm Trí Cơ Thể và Tâm Linh,12,1
+health,Health,Sức Khỏe,13,1
+science-and-geography,Science & Geography,Khoa Học và Địa Lý,14,1
+computing,Computing,Tin Học,15,1
+art-and-photography,Art & Photography,Nghệ Thuật và Nhiếp Ảnh,16,1
+romance,Romance,Lãng Mạn,17,1
+technology-and-engineering,Technology & Engineering,Công Nghệ và Kỹ Thuật,18,1
+religion,Religion,Tôn Giáo,19,1
+poetry-and-drama,Poetry & Drama,Thơ và Kịch,20,1
+food-and-drink,Food & Drink,Ẩm Thực và Đồ Uống,21,1
+history-and-archaeology,History & Archaeology,Lịch Sử và Khảo Cổ,22,1
+science-fiction-fantasy-and-horror,Science Fiction Fantasy & Horror,Khoa Học Viễn Tưởng Kỳ Ảo và Kinh Dị,23,1
+home-and-garden,Home & Garden,Nhà Cửa và Vườn Tược,24,1
+natural-history,Natural History,Lịch Sử Tự Nhiên,25,1
+reference,Reference,Tham Khảo,26,1
+medical,Medical,Y Học,27,1
+stationery,Stationery,Văn Phòng Phẩm,28,1
+entertainment,Entertainment,Giải Trí,29,1
+crime-and-thriller,Crime & Thriller,Tội Phạm và Giật Gân,30,1
+sport,Sport,Thể Thao,31,1
+travel-and-holiday-guides,Travel & Holiday Guides,Du Lịch và Hướng Dẫn Nghỉ Dưỡng,32,1
+humour,Humour,Hài Hước,33,1
