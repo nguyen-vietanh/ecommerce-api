@@ -2,6 +2,7 @@ package com.ecommerce.api.dto.request;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.ecommerce.api.constant.PriceRange;
 import com.ecommerce.api.constant.SortCriteria;
 
 import jakarta.validation.constraints.Max;
@@ -33,4 +34,6 @@ public class GetAllBooksRequest {
     String search;
 
     String category;
+
+    PriceRange price;
 }

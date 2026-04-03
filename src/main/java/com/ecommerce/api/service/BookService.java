@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import com.ecommerce.api.constant.PriceRange;
 import com.ecommerce.api.dto.request.GetAllBooksRequest;
 import com.ecommerce.api.dto.response.ApiSuccessResponse;
 import com.ecommerce.api.dto.response.GetAllBooksReponse;
@@ -49,6 +50,11 @@ public class BookService {
         if(category != null && !category.isBlank()) {
             Specification<Book> inCategory = BookSpecs.inCategory(category);
             bookSpecs = bookSpecs.and(inCategory);
+        }
+
+        PriceRange priceRange = getAllBooksRequest.getPrice();
+        if (priceRange != null) {
+            bookSpecs = bookSpecs.and(BookSpecs.inPriceRange(priceRange));
         }
 
         Page<Book> bookPage = this.bookRepository.findAll(bookSpecs, pageable);

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.domain.Specification;
 
+import com.ecommerce.api.constant.PriceRange;
 import com.ecommerce.api.entity.Book;
 
 import jakarta.persistence.criteria.Predicate;
@@ -38,6 +39,15 @@ public class BookSpecs {
                 return null;
             }
             return cb.equal(root.get("category").get("slug"), categorySlug);
+        };
+    }
+
+    public static Specification<Book> inPriceRange(PriceRange priceRange) {
+        return (root, query, cb) -> {
+            if (priceRange == null) {
+                return null;
+            }
+            return cb.between(root.get("price"), priceRange.getMinPrice(), priceRange.getMaxPrice());
         };
     }
 
