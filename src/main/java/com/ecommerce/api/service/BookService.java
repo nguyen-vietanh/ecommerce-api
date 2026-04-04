@@ -34,7 +34,7 @@ public class BookService {
     public ApiSuccessResponse<List<GetAllBooksReponse>> getBooks(GetAllBooksRequest getAllBooksRequest) {
         Pageable pageable = PageRequest.of(
             getAllBooksRequest.getPage() - 1,
-            getAllBooksRequest.getSize(),
+            getAllBooksRequest.getLimit(),
             Sort.by(getAllBooksRequest.getSort().getDirection(), getAllBooksRequest.getSort().getField())
         );
 

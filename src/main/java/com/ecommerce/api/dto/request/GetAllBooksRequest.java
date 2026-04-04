@@ -25,7 +25,7 @@ public class GetAllBooksRequest {
     @Min(value = 1)
     @Max(value = 100)
     @NotNull
-    Integer size = 20;
+    Integer limit = 20;
 
     @NotNull
     SortCriteria sort = SortCriteria.NEWEST;
