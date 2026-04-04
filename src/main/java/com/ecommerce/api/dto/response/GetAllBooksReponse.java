@@ -20,4 +20,6 @@ public class GetAllBooksReponse {
     String title;
     Long price;
     String coverImageUrl;
+    Double avgRating;
+    Long reviewCount;
 }

@@ -1,6 +1,9 @@
 package com.ecommerce.api.service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,9 +17,9 @@ import com.ecommerce.api.dto.request.GetAllBooksRequest;
 import com.ecommerce.api.dto.response.ApiSuccessResponse;
 import com.ecommerce.api.dto.response.GetAllBooksReponse;
 import com.ecommerce.api.entity.Book;
-import com.ecommerce.api.mapper.BookMapper;
 import com.ecommerce.api.repository.BookRepository;
-import com.ecommerce.api.specification.BookSpecs;
+import com.ecommerce.api.repository.projection.BookRatingProjection;
+import com.ecommerce.api.repository.specification.BookSpecs;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -29,15 +32,39 @@ import lombok.experimental.FieldDefaults;
 public class BookService {
 
     BookRepository bookRepository;
-    BookMapper bookMapper;
+    // BookMapper bookMapper;
+    ReviewService reviewService;
 
     public ApiSuccessResponse<List<GetAllBooksReponse>> getBooks(GetAllBooksRequest getAllBooksRequest) {
         Pageable pageable = this.buildPageable(getAllBooksRequest);
         Specification<Book> bookSpecs = this.builBookSpec(getAllBooksRequest);
         Page<Book> bookPage = this.bookRepository.findAll(bookSpecs, pageable);
+
+        List<Long> bookIds = bookPage.getContent().stream()
+            .map(book -> book.getId())
+            .toList();
+        Map<Long, BookRatingProjection> statsMap = this.reviewService.findRatingStatsByBookIds(bookIds)
+            .stream()
+            .collect(Collectors.toMap(bookRatingProjection -> bookRatingProjection.getBookId(), bookRatingProjection -> bookRatingProjection));
+
         return ApiSuccessResponse.<List<GetAllBooksReponse>>builder()
             .data(bookPage.getContent().stream()
-                .map(book -> this.bookMapper.toGetAllBooksReponse(book))
+                .map(book -> GetAllBooksReponse.builder()
+                    .id(book.getId())
+                    .title(book.getTitle())
+                    .price(book.getPrice())
+                    .coverImageUrl(book.getCoverImageUrl())
+                    .avgRating(
+                        Optional.ofNullable(statsMap.get(book.getId()))
+                            .map(bookRatingProjection -> bookRatingProjection.getAvgRating())
+                            .orElse(0d)
+                    )
+                    .reviewCount(
+                        Optional.ofNullable(statsMap.get(book.getId()))
+                            .map(bookRatingProjection -> bookRatingProjection.getReviewCount())
+                            .orElse(0L)
+                    )
+                    .build())
                 .toList())
             .currentPage(bookPage.getNumber() + 1)
             .requestedPageSize(bookPage.getSize())
