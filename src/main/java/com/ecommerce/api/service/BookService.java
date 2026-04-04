@@ -32,12 +32,24 @@ public class BookService {
     BookMapper bookMapper;
 
     public ApiSuccessResponse<List<GetAllBooksReponse>> getBooks(GetAllBooksRequest getAllBooksRequest) {
-        Pageable pageable = PageRequest.of(
-            getAllBooksRequest.getPage() - 1,
-            getAllBooksRequest.getLimit(),
-            Sort.by(getAllBooksRequest.getSort().getDirection(), getAllBooksRequest.getSort().getField())
-        );
+        Pageable pageable = this.buildPageable(getAllBooksRequest);
+        Specification<Book> bookSpecs = this.builBookSpec(getAllBooksRequest);
+        Page<Book> bookPage = this.bookRepository.findAll(bookSpecs, pageable);
+        return ApiSuccessResponse.<List<GetAllBooksReponse>>builder()
+            .data(bookPage.getContent().stream()
+                .map(book -> this.bookMapper.toGetAllBooksReponse(book))
+                .toList())
+            .currentPage(bookPage.getNumber() + 1)
+            .requestedPageSize(bookPage.getSize())
+            .currentPageElements(bookPage.getNumberOfElements())
+            .totalElements(bookPage.getTotalElements())
+            .totalPages(bookPage.getTotalPages())
+            .hasNext(bookPage.hasNext())
+            .hasPrevious(bookPage.hasPrevious())
+            .build();
+    }
 
+    private Specification<Book> builBookSpec(GetAllBooksRequest getAllBooksRequest) {
         Specification<Book> bookSpecs = (root, query, cb) -> null;
 
         String search = getAllBooksRequest.getSearch();
@@ -57,18 +69,14 @@ public class BookService {
             bookSpecs = bookSpecs.and(BookSpecs.inPriceRange(priceRange));
         }
 
-        Page<Book> bookPage = this.bookRepository.findAll(bookSpecs, pageable);
-        return ApiSuccessResponse.<List<GetAllBooksReponse>>builder()
-            .data(bookPage.getContent().stream()
-                .map(book -> this.bookMapper.toGetAllBooksReponse(book))
-                .toList())
-            .currentPage(bookPage.getNumber() + 1)
-            .requestedPageSize(bookPage.getSize())
-            .currentPageElements(bookPage.getNumberOfElements())
-            .totalElements(bookPage.getTotalElements())
-            .totalPages(bookPage.getTotalPages())
-            .hasNext(bookPage.hasNext())
-            .hasPrevious(bookPage.hasPrevious())
-            .build();
+        return bookSpecs;
+    }
+
+    private Pageable buildPageable(GetAllBooksRequest getAllBooksRequest) {
+        return PageRequest.of(
+            getAllBooksRequest.getPage() - 1,
+            getAllBooksRequest.getLimit(),
+            Sort.by(getAllBooksRequest.getSort().getDirection(), getAllBooksRequest.getSort().getField())
+        );
     }
 }
