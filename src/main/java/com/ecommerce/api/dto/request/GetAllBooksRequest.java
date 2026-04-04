@@ -36,4 +36,8 @@ public class GetAllBooksRequest {
     String category;
 
     PriceRange price;
+
+    @Min(value = 1)
+    @Max(value = 5)
+    Integer rating;
 }

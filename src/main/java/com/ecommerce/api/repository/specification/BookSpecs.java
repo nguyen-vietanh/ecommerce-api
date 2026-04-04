@@ -6,9 +6,13 @@ import java.util.List;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.ecommerce.api.constant.PriceRange;
+import com.ecommerce.api.constant.ReviewStatus;
 import com.ecommerce.api.entity.Book;
+import com.ecommerce.api.entity.Review;
 
 import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.Subquery;
 
 public class BookSpecs {
 
@@ -48,6 +52,24 @@ public class BookSpecs {
                 return null;
             }
             return cb.between(root.get("price"), priceRange.getMinPrice(), priceRange.getMaxPrice());
+        };
+    }
+
+    public static Specification<Book> hasMinRating(Integer minRating) {
+        return (root, query, cb) -> {
+            if (minRating == null) {
+                return null;
+            }
+
+            Subquery<Double> avgRatingSubquery = query.subquery(Double.class);
+            Root<Review> reviewRoot = avgRatingSubquery.from(Review.class);
+            avgRatingSubquery
+                    .select(cb.avg(reviewRoot.get("rating")))
+                    .where(
+                            cb.equal(reviewRoot.get("book"), root),
+                            cb.equal(reviewRoot.get("status"), ReviewStatus.APPROVED));
+
+            return cb.greaterThanOrEqualTo(avgRatingSubquery, (double) minRating);
         };
     }
 

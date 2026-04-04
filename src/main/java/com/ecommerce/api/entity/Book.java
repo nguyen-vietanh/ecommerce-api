@@ -1,11 +1,14 @@
 package com.ecommerce.api.entity;
 
+import java.util.List;
+
 import jakarta.persistence.CheckConstraint;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -56,4 +59,7 @@ public class Book extends BaseEntity {
 
     @OneToOne(mappedBy = "book", fetch = FetchType.LAZY)
     Inventory inventory;
+
+    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
+    List<Review> reviews;
 }

@@ -19,6 +19,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
             COUNT(r.id) AS reviewCount
         FROM Review r
         WHERE r.book.id IN :bookIds
+        AND r.status = 'APPROVED'
         GROUP BY r.book.id
     """)
     List<BookRatingProjection> findRatingStatsByBookIds(@Param("bookIds") List<Long> bookIds);

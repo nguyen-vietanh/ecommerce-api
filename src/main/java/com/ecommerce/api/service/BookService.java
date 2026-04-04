@@ -96,6 +96,11 @@ public class BookService {
             bookSpecs = bookSpecs.and(BookSpecs.inPriceRange(priceRange));
         }
 
+        Integer minRating = getAllBooksRequest.getRating();
+        if (minRating != null) {
+            bookSpecs = bookSpecs.and(BookSpecs.hasMinRating(minRating));
+        }
+
         return bookSpecs;
     }
 
