@@ -44,6 +44,6 @@ public class Review extends BaseEntity {
     String rejectedReason;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_id", nullable = false)
+    @JoinColumn(name = "book_id")
     Book book;
 }
